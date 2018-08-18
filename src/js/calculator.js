@@ -14,7 +14,21 @@ function BMICalculator() {
             person.bmiMessage = "You provided invalid inputs"
         }
     };
-    
+
+    this.imperial_bmi = function(person) {        
+        let w = person.weight * 703;
+        let h = person.height
+        if (w>0 && h>0) {
+            let bmi = w / Math.pow(h, 2);
+            bmi = +bmi.toFixed(2);
+            person.bmiValue = bmi;
+            person.bmiMessage = getMessage(bmi);            
+        } else {
+            person.bmiValue = "Invalid weight or height"
+            person.bmiMessage = "You provided invalid inputs"
+        }
+    };
+
     function getMessage(bmi) {
         if (bmi < 18.5) {
             return message = "Underweight";                        

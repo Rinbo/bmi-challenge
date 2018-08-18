@@ -10,9 +10,25 @@
 
 <body>
     <form id="calculate">
-        <div id="metric-inputs">
-            <input type="text" id="weight-in-kgs" placeholder="Weight">
-            <input type="text" id="height-in-cm" placeholder="Height">
+        
+        <div id="calculation-method">
+            <label for="method">Choose your prefered calculation method:</label>
+            <select name="method" default >
+                <option disabled selected value> -- select an option -- </option>
+                <option value="metric">Metric</option>
+                <option value="imperial">Imperial</option>            
+            </select>    
+        </div>
+
+        <div id="metric-inputs" hidden>
+            <input type="text" id="weight-in-kgs" placeholder="Weight in kg">
+            <input type="text" id="height-in-cm" placeholder="Height in cm">
+        </div>
+        
+        <div id="imperial-inputs" hidden>
+            <input type="text" id="weight-in-pounds" placeholder="Weight in pounds">
+            <input type="text" id="height-in-feet" placeholder="Feet">
+            <input type="text" id="height-in-inches" placeholder="Inches">
         </div>
 
         <button type="submit" value="Calculate"> Calculate </button>
@@ -29,8 +45,28 @@
         global.calculateForm = document.querySelector('#calculate');
         global.displayValueElement = document.querySelector('#display_value');
         global.displayMessageElement = document.querySelector('#display_message');
+        global.calculationMethod = document.querySelector("div#calculation-method select[name='method']")
+        global.metricInputs = document.getElementById('metric-inputs');
+        global.imperialInputs = document.getElementById('imperial-inputs');
+
 
         document.addEventListener('DOMContentLoaded', () => {
+
+            global.calculationMethod.addEventListener('click', event => {
+                event.preventDefault();                
+                if (global.calculationMethod.value === "metric") {
+                    global.metricInputs.hidden = false;
+                    global.imperialInputs.hidden = true;
+                    document.getElementById("weight-in-pounds").value = "";
+                    document.getElementById('height-in-feet').value = "";
+                    document.getElementById('height-in-inches').value = "";              
+                } else if (global.calculationMethod.value === "imperial") {
+                    global.imperialInputs.hidden = false;
+                    global.metricInputs.hidden = true;
+                    document.getElementById("weight-in-kgs").value = "";
+                    document.getElementById('height-in-cm').value = "";
+                }
+            })
            
             global.calculateForm.addEventListener('submit', event => {               
                 event.preventDefault();               
@@ -44,14 +80,27 @@
 
         const calculateBMI = () => {
             return new Promise(resolve => {               
-                let w = parseFloat(document.getElementById('weight-in-kgs').value);
-                let h = parseFloat(document.getElementById('height-in-cm').value);
-                let person = new Person({
-                    weight: w,
-                    height: h,
-                });
-                person.calculate_bmi();
-                resolve(person);
+                if (global.calculationMethod.value === "metric") {
+                    let w = parseFloat(document.getElementById('weight-in-kgs').value);
+                    let h = parseFloat(document.getElementById('height-in-cm').value);
+                    let person = new Person({
+                        weight: w,
+                        height: h,
+                    });
+                    person.calculate_bmi("metric");
+                    resolve(person);
+                } else if (global.calculationMethod.value === "imperial") {
+                    let w = parseFloat(document.getElementById('weight-in-pounds').value);
+                    let f = parseFloat(document.getElementById('height-in-feet').value);
+                    let i = parseFloat(document.getElementById('height-in-inches').value);
+                    let h = (f * 12) + i;
+                    let person = new Person({
+                        weight: w,
+                        height: h,
+                    });
+                    person.calculate_bmi("imperial");
+                    resolve(person);
+                }
             })
         };
     </script>
