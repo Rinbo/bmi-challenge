@@ -7,22 +7,23 @@ function BMICalculator() {
         if (w>0 && h>0) {
             let bmi = w / Math.pow(h, 2);
             bmi = +bmi.toFixed(2);
-            let message;
-            if (bmi < 18.5) {
-                message = "Underweight";                        
-            } else if (bmi >= 18.5 && bmi < 25) {
-                message = "Healthy";
-            } else if (bmi >= 25 && bmi < 30) {
-                message = "Overweight";
-            } else {
-                message = "Obese";
-            }
             person.bmiValue = bmi;
-            person.bmiMessage = message;
-            return person;
+            person.bmiMessage = getMessage(bmi);            
         } else {
             person.bmiValue = "Invalid weight or height"
             person.bmiMessage = "You provided invalid inputs"
         }
-    }; 
+    };
+    
+    function getMessage(bmi) {
+        if (bmi < 18.5) {
+            return message = "Underweight";                        
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return message = "Healthy";
+        } else if (bmi >= 25 && bmi < 30) {
+            return message = "Overweight";
+        } else {
+            return message = "Obese";
+        }
+    };
 };
