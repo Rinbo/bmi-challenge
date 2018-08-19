@@ -1,0 +1,71 @@
+:root {
+  --base-color: #252525;
+  --font-color: #cccccc;
+  --top-color: #303030;
+}
+
+body {
+  background-color: var(--base-color);
+  color: var(--font-color);
+  font-family: 'Share Tech', sans-serif;
+}
+
+h1 {
+  font-size: 30px;
+  
+}
+
+.myContainer {
+  background: var(--top-color);
+  margin: 15px auto;
+  border: solid 2px var(--font-color);
+  border-radius: 15px;
+  max-width: 900px;
+  min-height: 300px;
+  height: auto;
+  padding: 15px;
+  color: var(--font-color);
+}
+
+#form-area{
+  max-width: 600px;
+  margin: auto;
+}
+
+/*# sourceMappingURL=style.css.map */
+
+
+.custom-labels {
+  display: inline-block;
+  width: 50px;
+}
+
+input {
+  width: 80px;
+}
+
+#calculation-method {
+  margin-bottom: 20px;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 18px;
+  padding: 5px 10px 5px 10px;
+  display: inline-block;
+}
+
+button {
+  margin-top: 15px;
+  background-color: var(--base-color);
+  border: solid 1px var(--font-color);
+  border-radius: 10px;
+  color: var(--font-color);
+  padding: 8px 20px;
+  font-size: 16px;
+}
+
+select {
+  margin: 6px 0;
+  padding: 2px 5px;
+}

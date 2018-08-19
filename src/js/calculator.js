@@ -10,7 +10,7 @@ function BMICalculator() {
             person.bmiValue = bmi;
             person.bmiMessage = getMessage(bmi);            
         } else {
-            person.bmiValue = "Invalid weight or height"
+            person.bmiValue = false
             person.bmiMessage = "You provided invalid inputs"
         }
     };
@@ -24,7 +24,7 @@ function BMICalculator() {
             person.bmiValue = bmi;
             person.bmiMessage = getMessage(bmi);            
         } else {
-            person.bmiValue = "Invalid weight or height"
+            person.bmiValue = false
             person.bmiMessage = "You provided invalid inputs"
         }
     };

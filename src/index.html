@@ -3,108 +3,130 @@
 
 <head>
     <meta charset="utf-8">
-    <title>BMI Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BMI Calculator</title>    
+    <link rel="stylesheet" href="style.css">    
+    <link href="https://fonts.googleapis.com/css?family=Share+Tech" rel="stylesheet">
     <script src="js/person.js"></script>
     <script src="js/calculator.js"></script>
 </head>
 
 <body>
-    <form id="calculate">
+    <div class="myContainer">
+        <div id="form-area">
         
-        <div id="calculation-method">
-            <label for="method">Choose your prefered calculation method:</label>
-            <select name="method" default >
-                <option disabled selected value> -- select an option -- </option>
-                <option value="metric">Metric</option>
-                <option value="imperial">Imperial</option>            
-            </select>    
-        </div>
-
-        <div id="metric-inputs" hidden>
-            <input type="text" id="weight-in-kgs" placeholder="Weight in kg">
-            <input type="text" id="height-in-cm" placeholder="Height in cm">
-        </div>
+            <h1>BMI Calculator</h1>
         
-        <div id="imperial-inputs" hidden>
-            <input type="text" id="weight-in-pounds" placeholder="Weight in pounds">
-            <input type="text" id="height-in-feet" placeholder="Feet">
-            <input type="text" id="height-in-inches" placeholder="Inches">
-        </div>
+            <form id="calculate">
 
-        <button type="submit" value="Calculate"> Calculate </button>
-    </form>
-    <div>
-        <span id="display_value"></span>
-        <span id="display_message"></span>
-    </div>
+                <div id="calculation-method">
+                    <label for="method">Choose your prefered calculation method:</label>
+                    <select class"my-dropdown" name="method" default>
+                        <option disabled selected value> -- select an option -- </option>
+                        <option value="metric">Metric</option>
+                        <option value="imperial">Imperial</option>            
+                    </select>    
+                </div>
 
-    <script type="text/javascript">
-        
-        const global = {}
+                <div id="metric-inputs" hidden>
+                    <label class="custom-labels" for="wkg">Weight: </label>                
+                    <input type="text" id="weight-in-kgs" placeholder="[kg]" name="wkg"><br>
+                    <label class="custom-labels" for="hcm">Height:</label>
+                    <input type="text" id="height-in-cm" placeholder="[cm]" name="hcm">
+                </div>
+                
+                <div id="imperial-inputs" hidden>
+                    <label class="custom-labels" for="wlbs">Weight: </label>
+                    <input type="text" id="weight-in-pounds" placeholder="[pounds]" name="wlbs"><br>
+                    <label class="custom-labels" for="hft">Height:</label>
+                    <input type="text" id="height-in-feet" placeholder="[feet]" name="hft">
+                    <input type="text" id="height-in-inches" placeholder="[Inches]" name="hin">
+                </div>
 
-        global.calculateForm = document.querySelector('#calculate');
-        global.displayValueElement = document.querySelector('#display_value');
-        global.displayMessageElement = document.querySelector('#display_message');
-        global.calculationMethod = document.querySelector("div#calculation-method select[name='method']")
-        global.metricInputs = document.getElementById('metric-inputs');
-        global.imperialInputs = document.getElementById('imperial-inputs');
+                <button class="mui-btn mui-btn--primary" type="submit" value="Calculate"> Calculate </button>
+            </form>
+            
+            <div id="message">
+                <span id="display_value"></span>
+                <span id="display_message"></span>
+            </div>
+
+            <script type="text/javascript">
+                
+                const global = {}
+
+                global.calculateForm = document.querySelector('#calculate');
+                global.displayValueElement = document.querySelector('#display_value');
+                global.displayMessageElement = document.querySelector('#display_message');
+                global.calculationMethod = document.querySelector("div#calculation-method select[name='method']")
+                global.metricInputs = document.getElementById('metric-inputs');
+                global.imperialInputs = document.getElementById('imperial-inputs');
+                global.message = document.getElementById('message');
 
 
-        document.addEventListener('DOMContentLoaded', () => {
+                document.addEventListener('DOMContentLoaded', () => {
 
-            global.calculationMethod.addEventListener('click', event => {
-                event.preventDefault();                
-                if (global.calculationMethod.value === "metric") {
-                    global.metricInputs.hidden = false;
-                    global.imperialInputs.hidden = true;
-                    document.getElementById("weight-in-pounds").value = "";
-                    document.getElementById('height-in-feet').value = "";
-                    document.getElementById('height-in-inches').value = "";              
-                } else if (global.calculationMethod.value === "imperial") {
-                    global.imperialInputs.hidden = false;
-                    global.metricInputs.hidden = true;
-                    document.getElementById("weight-in-kgs").value = "";
-                    document.getElementById('height-in-cm').value = "";
-                }
-            })
-           
-            global.calculateForm.addEventListener('submit', event => {               
-                event.preventDefault();               
-                calculateBMI()
-                    .then(person => {                       
-                        global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
-                        global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
+                    global.calculationMethod.addEventListener('click', event => {
+                        event.preventDefault();                
+                        if (global.calculationMethod.value === "metric") {
+                            global.metricInputs.hidden = false;
+                            global.imperialInputs.hidden = true;                        
+                            document.getElementById("weight-in-pounds").value = "";
+                            document.getElementById('height-in-feet').value = "";
+                            document.getElementById('height-in-inches').value = "";              
+                        } else if (global.calculationMethod.value === "imperial") {
+                            global.imperialInputs.hidden = false;
+                            global.metricInputs.hidden = true;
+                            document.getElementById("weight-in-kgs").value = "";
+                            document.getElementById('height-in-cm').value = "";
+                        }
                     })
-            })
-        });
+                
+                    global.calculateForm.addEventListener('submit', event => {               
+                        event.preventDefault();               
+                        calculateBMI()
+                            .then(person => {
+                                                        
+                                if (person.bmiValue) {
+                                    global.message.style.backgroundColor = "#396040";                       
+                                    global.displayValueElement.innerHTML = `Your BMI is ${person.bmiValue}`;
+                                    global.displayMessageElement.innerHTML = `and you are ${person.bmiMessage}`;
+                                } else {
+                                    global.message.style.backgroundColor = "#660000";
+                                    global.displayValueElement.innerHTML = `Something went wrong :(. Make sure your inputs are provided with the proper values.`;
+                                }
+                            })
+                    })
+                });
 
-        const calculateBMI = () => {
-            return new Promise(resolve => {               
-                if (global.calculationMethod.value === "metric") {
-                    let w = parseFloat(document.getElementById('weight-in-kgs').value);
-                    let h = parseFloat(document.getElementById('height-in-cm').value);
-                    let person = new Person({
-                        weight: w,
-                        height: h,
-                    });
-                    person.calculate_bmi("metric");
-                    resolve(person);
-                } else if (global.calculationMethod.value === "imperial") {
-                    let w = parseFloat(document.getElementById('weight-in-pounds').value);
-                    let f = parseFloat(document.getElementById('height-in-feet').value);
-                    let i = parseFloat(document.getElementById('height-in-inches').value);
-                    let h = (f * 12) + i;
-                    let person = new Person({
-                        weight: w,
-                        height: h,
-                    });
-                    person.calculate_bmi("imperial");
-                    resolve(person);
-                }
-            })
-        };
-    </script>
-
+                const calculateBMI = () => {
+                    return new Promise(resolve => {               
+                        if (global.calculationMethod.value === "metric") {
+                            let w = parseFloat(document.getElementById('weight-in-kgs').value);
+                            let h = parseFloat(document.getElementById('height-in-cm').value);
+                            let person = new Person({
+                                weight: w,
+                                height: h,
+                            });
+                            person.calculate_bmi("metric");
+                            resolve(person);
+                        } else if (global.calculationMethod.value === "imperial") {
+                            let w = parseFloat(document.getElementById('weight-in-pounds').value);
+                            let f = parseFloat(document.getElementById('height-in-feet').value);
+                            let i = parseFloat(document.getElementById('height-in-inches').value);
+                            let h = (f * 12) + i;
+                            let person = new Person({
+                                weight: w,
+                                height: h,
+                            });
+                            person.calculate_bmi("imperial");
+                            resolve(person);
+                        }
+                    })
+                };
+            </script>
+        </div>
+    </div>
 </body>
 
 </html>
