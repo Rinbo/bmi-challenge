@@ -21,14 +21,14 @@
 
                 <div id="calculation-method">
                     <label for="method">Choose your prefered calculation method:</label>
-                    <select class"my-dropdown" name="method" default>
-                        <option disabled selected value> -- select an option -- </option>
+                    <select class="my-dropdown" name="method" default>
+                        
                         <option value="metric">Metric</option>
                         <option value="imperial">Imperial</option>            
                     </select>    
                 </div>
 
-                <div id="metric-inputs" hidden>
+                <div id="metric-inputs">
                     <label class="custom-labels" for="wkg">Weight: </label>                
                     <input type="text" id="weight-in-kgs" placeholder="[kg]" name="wkg"><br>
                     <label class="custom-labels" for="hcm">Height:</label>
@@ -43,7 +43,7 @@
                     <input type="text" id="height-in-inches" placeholder="[Inches]" name="hin">
                 </div>
 
-                <button class="mui-btn mui-btn--primary" type="submit" value="Calculate"> Calculate </button>
+                <button type="submit" value="Calculate"> Calculate </button>
             </form>
             
             <div id="message">
