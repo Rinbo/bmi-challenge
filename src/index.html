@@ -66,8 +66,8 @@
 
                 document.addEventListener('DOMContentLoaded', () => {
 
-                    global.calculationMethod.addEventListener('click', event => {
-                        event.preventDefault();                
+                    global.calculationMethod.onchange = function() {
+                                      
                         if (global.calculationMethod.value === "metric") {
                             global.metricInputs.hidden = false;
                             global.imperialInputs.hidden = true;                        
@@ -80,7 +80,7 @@
                             document.getElementById("weight-in-kgs").value = "";
                             document.getElementById('height-in-cm').value = "";
                         }
-                    })
+                    }
                 
                     global.calculateForm.addEventListener('submit', event => {               
                         event.preventDefault();               
